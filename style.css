@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid rgb(16, 24, 64, 0.4);
+  border-radius: 0.625rem;
+  margin-bottom: 4px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+input:focus {
+  border: 1px solid rgb(16, 24, 64, 0.4);
+  outline: 1px solid #96a3e7;
+}
+
+button {
+  background: #101840;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-weight: bold;
+  border-radius: 5px;
+}
