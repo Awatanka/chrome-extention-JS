@@ -12,6 +12,7 @@ input {
   border-radius: 0.625rem;
   margin-bottom: 4px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  min-width: 400px;
 }
 
 input:focus {
@@ -41,7 +42,7 @@ ul {
 li {
   margin: 5px;
   list-style: none;
-  background-color: #96a3e7;
+  background-color: rgb(150, 163, 231, 0.4);
   width: max-content;
   padding: 10px;
   border-radius: 10px;
@@ -49,4 +50,6 @@ li {
 
 a {
   color: #101840;
+  cursor: pointer;
+  text-decoration: none;
 }
