@@ -1,32 +1,84 @@
 let myLeads = [];
 const inputEl = document.getElementById("input-el");
 const saveBtn = document.getElementById("input-btn");
-const link = "www.awesomelead.com";
+const downloadBtn = document.getElementById("download-btn");
 const ulEl = document.getElementById("ul-el");
+const delBtn = document.getElementById("delete-btn");
+const tabBtn = document.getElementById("save-btn");
 
-localStorage.clear();
-let leadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"));
-if (leadsFromLocalStorage) {
-  myLeads = leadsFromLocalStorage;
+const loadLeadsFromLocalStorage = () => {
+  const leadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"));
+  if (leadsFromLocalStorage) {
+    myLeads = leadsFromLocalStorage;
+    renderLeads();
+  }
+};
+
+const renderLeads = () => {
+  const listItems = myLeads
+    .map(
+      (lead, index) =>
+        `<li onclick="removeLead(${index})"><a target="_blank" href="${lead}">${lead}</a></li>`
+    )
+    .join("");
+  ulEl.innerHTML = listItems;
+};
+
+const clearLocalStorage = () => {
+  localStorage.clear();
+  myLeads = [];
   renderLeads();
-}
+};
 
-console.log(myLeads);
-
-saveBtn.addEventListener("click", function () {
+const saveLead = () => {
   myLeads.push(inputEl.value);
   inputEl.value = "";
   localStorage.setItem("myLeads", JSON.stringify(myLeads));
   renderLeads();
   console.log(localStorage.getItem("myLeads"));
+};
+
+const saveTabLead = () => {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    myLeads.push(tabs[0].url);
+    localStorage.setItem("myLeads", JSON.stringify(myLeads));
+    renderLeads();
+  });
+};
+
+const downloadLeads = () => {
+  const leadsText = myLeads.join("\n");
+  const blob = new Blob([leadsText], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "leads.txt";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};
+
+const removeLead = (index) => {
+  myLeads.splice(index, 1);
+  localStorage.setItem("myLeads", JSON.stringify(myLeads));
+  renderLeads();
+};
+
+delBtn.addEventListener("dblclick", () => {
+  console.log("double clicked!");
+  clearLocalStorage();
 });
 
-function renderLeads() {
-  let listItems = "";
+saveBtn.addEventListener("click", () => {
+  saveLead();
+});
 
-  for (let i = 0; i < myLeads.length; i++) {
-    listItems += `<li><a target="_blank" href="${myLeads[i]}">${myLeads[i]}</a></li>`;
-  }
+tabBtn.addEventListener("click", () => {
+  saveTabLead();
+});
 
-  ulEl.innerHTML = listItems;
-}
+downloadBtn.addEventListener("click", () => {
+  downloadLeads();
+});
+
+loadLeadsFromLocalStorage();

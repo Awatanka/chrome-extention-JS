@@ -1,9 +1,12 @@
 {
     "manifest_version": 3,
     "version": "1.0",
-    "name": "JobSnap",
+    "name": "Leads Snap",
     "action": {
         "default_popup": "index.html",
         "default_icon": "icon.png"
-    }
+    },
+    "permissions": [
+        "tabs"
+    ]
 }

@@ -1,33 +1,53 @@
 body {
-  margin: 20px;
+  margin: 20px auto;
   padding: 10px;
   font-family: Arial, Helvetica, sans-serif;
+  width: 400px;
+  border-radius: 10px;
 }
 
 input {
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
-  border: 1px solid rgb(16, 24, 64, 0.4);
-  border-radius: 0.625rem;
-  margin-bottom: 4px;
+  border: 1px solid rgba(16, 24, 64, 0.4);
+  border-radius: 10px;
+  margin-bottom: 8px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  min-width: 400px;
 }
 
 input:focus {
-  border: 1px solid rgb(16, 24, 64, 0.4);
+  border: 1px solid rgba(16, 24, 64, 0.4);
   outline: 1px solid #96a3e7;
 }
 
-button {
+#input-btn,
+#save-btn {
   background: #101840;
   color: white;
   padding: 10px 20px;
   border: none;
   font-weight: bold;
   border-radius: 5px;
-  margin-top: 15px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+#delete-btn {
+  background: white;
+  color: #101840;
+  padding: 10px 20px;
+  border: 1px solid #101840;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+#download-btn {
+  border: none;
+  cursor: pointer;
+  background-color: white;
 }
 
 ul {
@@ -35,15 +55,13 @@ ul {
   list-style: none;
   padding-left: 0;
   display: flex;
-  flex-direction: row;
-  flex-grow: inherit;
+  flex-wrap: wrap;
 }
 
 li {
   margin: 5px;
   list-style: none;
-  background-color: rgb(150, 163, 231, 0.4);
-  width: max-content;
+  background-color: rgba(150, 163, 231, 0.4);
   padding: 10px;
   border-radius: 10px;
 }
@@ -52,4 +70,15 @@ a {
   color: #101840;
   cursor: pointer;
   text-decoration: none;
+}
+
+img {
+  width: 20px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
