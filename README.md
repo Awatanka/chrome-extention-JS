@@ -2,6 +2,9 @@
 
 <img width="430" alt="Screenshot 2023-06-20 at 9 44 25 PM" src="https://github.com/Awatanka/chrome-extention-JS/assets/97055104/3685c8b2-a64d-4588-ba0f-591ae2e3da37">
 
+# Leads Snap version 2.0
+<img width="430" alt="Screenshot 2023-06-27 at 7 51 53 PM" src="https://github.com/Awatanka/chrome-extention-JS/assets/97055104/68c922d9-451a-4397-b4c2-97446a1cc542">
+
 To download and use the extension in your own browser, please follow these steps:
 
 1. Visit my GitHub repository
