@@ -10,38 +10,54 @@ input {
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
-  border: 1px solid rgba(16, 24, 64, 0.4);
-  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
   margin-bottom: 8px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.24);
 }
 
 input:focus {
-  border: 1px solid rgba(16, 24, 64, 0.4);
-  outline: 1px solid #96a3e7;
+  border: 2px solid #009688; /* Teal 500 */
+  outline: none;
 }
-
-#input-btn,
-#save-btn {
-  background: #101840;
+#input-btn {
+  background: #04c2af;
   color: white;
   padding: 10px 20px;
   border: none;
   font-weight: bold;
-  border-radius: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+#save-btn {
+  background: #009688; /* Teal 500 */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-weight: bold;
+  border-radius: 4px;
   cursor: pointer;
   margin-right: 5px;
 }
 
 #delete-btn {
   background: white;
-  color: #101840;
+  color: #009688; /* Teal 500 */
   padding: 10px 20px;
-  border: 1px solid #101840;
+  border: 1px solid #009688; /* Teal 500 */
   font-weight: bold;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
   margin-right: 5px;
+}
+
+#input-btn:hover,
+#save-btn:hover,
+#delete-btn:hover {
+  background-color: #00897b;
+  color: white; /* Teal 700 */
 }
 
 #download-btn {
@@ -61,19 +77,23 @@ ul {
 li {
   margin: 5px;
   list-style: none;
-  background-color: rgba(150, 163, 231, 0.4);
+  background-color: #e0f2f1; /* Teal 50 */
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 4px;
+}
+
+li:hover {
+  background-color: #b2dfdb; /* Teal 200 */
 }
 
 a {
-  color: #101840;
+  color: #009688; /* Teal 500 */
   cursor: pointer;
   text-decoration: none;
 }
 
 img {
-  width: 20px;
+  width: 60px;
 }
 
 .container {
