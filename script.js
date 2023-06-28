@@ -47,7 +47,6 @@ const saveLead = () => {
   inputEl.value = "";
   localStorage.setItem("myLeads", JSON.stringify(myLeads));
   renderLeads();
-  console.log(localStorage.getItem("myLeads"));
 };
 
 // Save lead from current tab
@@ -59,39 +58,45 @@ const saveTabLead = () => {
   });
 };
 
-// Download leads as CSV
 const downloadLeads = () => {
-  let csvContent = "data:text/csv;charset=utf-8,";
+  let documentContent = "";
 
-  // Add data rows
   for (let i = 0; i < myLeads.length; i++) {
-    csvContent += `"${myLeads[i]}"\n`;
+    const lead = myLeads[i];
+    const shortenedLead = lead.startsWith("http")
+      ? lead.replace(/(^\w+:|^)\/\//, "").split("/")[0]
+      : lead;
+
+    if (lead.startsWith("http")) {
+      // For links, include both the link and its shortened form
+      documentContent += `Link: ${shortenedLead}\nURL: ${lead}\n\n`;
+    } else {
+      // For non-link content, include only the content
+      documentContent += `Content: ${lead}\n\n`;
+    }
   }
 
-  // Create a download link
-  const encodedUri = encodeURI(csvContent);
-  const link = document.createElement("a");
-  link.setAttribute("href", encodedUri);
-  link.setAttribute("download", "leads.csv");
-  document.body.appendChild(link);
-
-  // Trigger the download
-  link.click();
-
-  // Clean up
-  document.body.removeChild(link);
+  const blob = new Blob([documentContent], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "leads.txt";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 };
 
-// Convert leads and inputs array to CSV format
-const convertArrayToCSV = (leads, inputs) => {
-  const csvRows = [];
+// Convert leads array to CSV format
+const convertArrayToCSV = (leads) => {
+  let csvContent = "data:text/csv;charset=utf-8,";
+  csvContent += "Lead\n"; // Header row
 
   for (let i = 0; i < leads.length; i++) {
-    const csvRow = `"${leads[i]}"\n"${inputs[i]}"\n\n`; // Separate rows for leads and content
-    csvRows.push(csvRow);
+    const lead = leads[i];
+    csvContent += `"${lead}"\n`; // Lead row
   }
 
-  return csvRows.join("");
+  return csvContent;
 };
 
 // Event listeners
@@ -114,3 +119,5 @@ downloadBtn.addEventListener("click", () => {
 
 // Load leads from local storage on page load
 loadLeadsFromLocalStorage();
+
+console.log(myLeads);
