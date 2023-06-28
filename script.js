@@ -6,6 +6,7 @@ const downloadBtn = document.getElementById("download-btn");
 const ulEl = document.getElementById("ul-el");
 const delBtn = document.getElementById("delete-btn");
 const tabBtn = document.getElementById("save-btn");
+const formatBtn = document.getElementById("format-select");
 
 // Load leads from local storage
 const loadLeadsFromLocalStorage = () => {
@@ -58,45 +59,73 @@ const saveTabLead = () => {
   });
 };
 
-const downloadLeads = () => {
-  let documentContent = "";
+const downloadLeads = (fileFormat) => {
+  if (fileFormat === "text") {
+    let documentContent = "";
 
-  for (let i = 0; i < myLeads.length; i++) {
-    const lead = myLeads[i];
-    const shortenedLead = lead.startsWith("http")
-      ? lead.replace(/(^\w+:|^)\/\//, "").split("/")[0]
-      : lead;
+    for (let i = 0; i < myLeads.length; i++) {
+      const lead = myLeads[i];
+      const shortenedLead = lead.startsWith("http")
+        ? lead.replace(/(^\w+:|^)\/\//, "").split("/")[0]
+        : lead;
 
-    if (lead.startsWith("http")) {
-      // For links, include both the link and its shortened form
-      documentContent += `Link: ${shortenedLead}\nURL: ${lead}\n\n`;
-    } else {
-      // For non-link content, include only the content
-      documentContent += `Content: ${lead}\n\n`;
+      if (lead.startsWith("http")) {
+        // For links, include both the link and its shortened form
+        documentContent += `Link: ${shortenedLead}\nURL: ${lead}\n\n`;
+      } else {
+        // For non-link content, include only the content
+        documentContent += `Content: ${lead}\n\n`;
+      }
     }
+
+    const blob = new Blob([documentContent], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "leads.txt";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  } else if (fileFormat === "html") {
+    let tableContent =
+      "<table style='border-collapse: collapse; margin: 20px auto;'>\n"; // Added margin and centering style
+
+    for (let i = 0; i < myLeads.length; i++) {
+      const lead = myLeads[i];
+      const shortenedLead = lead.startsWith("http")
+        ? lead.replace(/(^\w+:|^)\/\//, "").split("/")[0]
+        : lead;
+
+      if (lead.startsWith("http")) {
+        // For links, include both the link and its shortened form in a table row
+        tableContent += `<tr>
+        <td style='padding: 5px; border: 1px solid black; font-weight: bold; color: #333;'>Link:</td> <!-- Added font-weight and color -->
+        <td style='padding: 5px; border: 1px solid black; color: #666;'>${shortenedLead}</td> <!-- Added color -->
+      </tr>\n`;
+        tableContent += `<tr>
+        <td style='padding: 5px; border: 1px solid black; font-weight: bold; color: #333;'>URL:</td> <!-- Added font-weight and color -->
+        <td style='padding: 5px; border: 1px solid black;'><a href='${lead}' style='color: #009688;'>${lead}</a></td> <!-- Added link color -->
+      </tr>\n\n`;
+      } else {
+        // For non-link content, include only the content in a table row
+        tableContent += `<tr>
+        <td style='padding: 5px; border: 1px solid black; font-weight: bold; color: #333;'>Content:</td> <!-- Added font-weight and color -->
+        <td style='padding: 5px; border: 1px solid black; color: #666;'>${lead}</td> <!-- Added color -->
+      </tr>\n\n`;
+      }
+    }
+
+    tableContent += "</table>";
+
+    const blob = new Blob([tableContent], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "leads.html";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   }
-
-  const blob = new Blob([documentContent], { type: "text/plain" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "leads.txt";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-};
-
-// Convert leads array to CSV format
-const convertArrayToCSV = (leads) => {
-  let csvContent = "data:text/csv;charset=utf-8,";
-  csvContent += "Lead\n"; // Header row
-
-  for (let i = 0; i < leads.length; i++) {
-    const lead = leads[i];
-    csvContent += `"${lead}"\n`; // Lead row
-  }
-
-  return csvContent;
 };
 
 // Event listeners
@@ -114,10 +143,9 @@ tabBtn.addEventListener("click", () => {
 });
 
 downloadBtn.addEventListener("click", () => {
-  downloadLeads();
+  const fileFormat = formatBtn.value;
+  downloadLeads(fileFormat);
 });
 
 // Load leads from local storage on page load
 loadLeadsFromLocalStorage();
-
-console.log(myLeads);

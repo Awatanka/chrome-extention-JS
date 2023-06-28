@@ -4,7 +4,7 @@
     "name": "Leads Snap",
     "action": {
         "default_popup": "index.html",
-        "default_icon": "download.png"
+        "default_icon": "icon.png"
     },
     "permissions": [
         "tabs"
