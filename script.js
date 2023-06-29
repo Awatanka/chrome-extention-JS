@@ -43,7 +43,13 @@ const clearLocalStorage = () => {
 
 // Save lead from input
 const saveLead = () => {
-  const lead = inputEl.value;
+  const lead = inputEl.value.trim(); // Trim whitespace from the input
+
+  // Check if the lead is empty
+  if (lead === "") {
+    return; // Exit the function without saving
+  }
+
   myLeads.push(lead);
   inputEl.value = "";
   localStorage.setItem("myLeads", JSON.stringify(myLeads));
